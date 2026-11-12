@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bon appétit! French words on the English menu</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;600;700&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+:root{--bg:#f4f6fa;--card:#fff;--ink:#1b2a41;--mute:#56657a;--blue:#2b5aa8;--red:#c0392f;--line:#d6dde8;--ok:#1f7a4d;--okbg:#e3f4ea;--badbg:#fbe5e3;--hi:#fdecea;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#10182a;--card:#18233b;--ink:#eef2f9;--mute:#a9b6cb;--blue:#7fa6ee;--red:#ff8a7e;--line:#2d3b58;--ok:#7be0a8;--okbg:#17372a;--badbg:#44211f;--hi:#3a2326}}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Figtree,"Segoe UI",Helvetica,Arial,sans-serif;line-height:1.55;font-size:17px}
+.flag{height:8px;background:linear-gradient(90deg,var(--blue) 33.3%,#fff 33.3% 66.6%,var(--red) 66.6%)}
+header,main,footer{max-width:900px;margin:0 auto;padding:0 18px}
+h1,h2,h3{font-family:"Young Serif",Georgia,"Times New Roman",serif;font-weight:400;line-height:1.15;margin:0}
+h1{font-size:clamp(2rem,6vw,3.2rem);padding-top:34px}
+.lead{color:var(--mute);max-width:60ch;margin:12px 0 0}
+.fact{margin:22px 0;padding:16px 18px;border:2px dashed var(--red);border-radius:14px;background:var(--card)}
+.fact h2{font-size:1.25rem;margin-bottom:6px}
+.tips{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:0 0 22px;padding:0;list-style:none}
+.tips li{background:var(--card);border-left:5px solid var(--blue);padding:10px 12px;border-radius:6px;font-size:.95rem}
+.tabs{display:flex;gap:10px;margin:8px 0 20px}
+.tab{flex:1;font:inherit;font-weight:700;font-size:1.05rem;padding:14px;border-radius:12px;border:2px solid var(--blue);background:var(--card);color:var(--blue);cursor:pointer}
+.tab[aria-selected="true"]{background:var(--blue);color:#fff}
+.tab small{display:block;font-weight:400;font-size:.8rem}
+:focus-visible{outline:3px solid var(--red);outline-offset:2px}
+.level{display:none}.level.on{display:block}
+.text{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;margin:0 0 22px}
+.text h2{font-size:1.5rem;margin-bottom:10px}
+.text p.body{font-size:1.12rem;max-width:62ch}
+.w{font:inherit;color:var(--red);background:var(--hi);border:0;border-bottom:2px dotted var(--red);padding:0 3px;border-radius:3px;cursor:pointer;font-weight:600}
+.panel{margin-top:14px;padding:14px 16px;border-radius:10px;background:var(--bg);border:1px solid var(--line);min-height:56px}
+.panel .hint{color:var(--mute);margin:0}
+.panel h3{font-size:1.3rem;color:var(--red)}
+.panel dl{margin:8px 0;display:grid;grid-template-columns:auto 1fr;gap:4px 12px}
+.panel dt{font-weight:700;color:var(--mute)}.panel dd{margin:0}
+.say{font:inherit;font-size:.9rem;padding:6px 12px;border-radius:20px;border:1.5px solid var(--blue);background:transparent;color:var(--blue);cursor:pointer;margin:4px 6px 0 0}
+.say:hover{background:var(--blue);color:#fff}
+.q{margin:18px 0 0;padding-top:14px;border-top:1px solid var(--line)}
+.q p{margin:0 0 8px;font-weight:600}
+.opts{display:grid;gap:8px}
+.opt{font:inherit;text-align:left;padding:10px 14px;border-radius:10px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
+.opt:hover:not(:disabled){border-color:var(--blue)}
+.opt.right{background:var(--okbg);border-color:var(--ok)}
+.opt.wrong{background:var(--badbg);border-color:var(--red)}
+.fb{margin:8px 0 0;font-size:.95rem;color:var(--mute);min-height:1.4em}
+.score{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding:8px 0;font-weight:700;color:var(--mute)}
+.result{display:none;background:var(--blue);color:#fff;border-radius:14px;padding:20px;margin:0 0 22px}
+.result.on{display:block}.result h2{font-size:1.6rem}
+.result button{font:inherit;margin-top:10px;padding:8px 16px;border-radius:20px;border:0;cursor:pointer;font-weight:700}
+.bank{overflow-x:auto;margin:0 0 30px;background:var(--card);border:1px solid var(--line);border-radius:14px}
+table{border-collapse:collapse;width:100%;min-width:620px;font-size:.95rem}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:middle}
+th{color:var(--mute);font-weight:600}
+td.en{font-weight:700;color:var(--red)}
+h2.sec{font-size:1.5rem;margin:30px 0 10px}
+footer{text-align:center;color:var(--mute);padding:26px 18px 40px;border-top:1px solid var(--line);margin-top:20px}
+@media (prefers-reduced-motion:no-preference){.opt,.tab,.say{transition:background .15s,border-color .15s}}
+html{font-size:calc(100% * var(--sc,1))}
+body{font-size:calc(17px * var(--sc,1));line-height:var(--lh,1.55);letter-spacing:var(--ls,0);word-spacing:var(--ws,0)}
+body.easy,body.easy h1,body.easy h2,body.easy h3{font-family:"Atkinson Hyperlegible",Verdana,Arial,sans-serif}
+.score{padding-right:64px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 14px}
+.chip{font:inherit;font-weight:600;padding:8px 14px;border-radius:20px;border:2px solid var(--blue);background:var(--card);color:var(--ink);cursor:pointer}
+.chip.sel{background:var(--blue);color:#fff}
+.chip.done{border-color:var(--ok);background:var(--okbg);color:var(--ink);cursor:default}
+.buckets{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px}
+.bw{border:2px dashed var(--line);border-radius:12px;padding:6px;background:var(--bg);min-height:100px}
+.bw.bad{border-color:var(--red);background:var(--badbg)}
+.bucket{font:inherit;width:100%;text-align:left;font-weight:700;padding:8px;border:0;background:transparent;color:var(--ink);cursor:pointer}
+.bw .in{display:flex;flex-wrap:wrap;gap:6px;padding:0 6px 6px}
+.gl{margin:0 0 14px;line-height:2.2}
+.gap{font:inherit;padding:4px 6px;border-radius:8px;border:2px solid var(--blue);background:var(--card);color:var(--ink);max-width:100%}
+.gap.right{border-color:var(--ok);background:var(--okbg)}
+.gap.wrong{border-color:var(--red);background:var(--badbg)}
+.mk{font-size:.9rem;color:var(--mute)}
+html[data-bg="hc"] .chip.sel{color:#000}
+html:root .result{background:#1f4a94;color:#fff;scroll-margin-top:80px}
+html:root[data-bg="hc"] .result{background:#000;color:#fff;border:3px solid #fff}
+.result ul{margin:8px 0;padding-left:20px}
+.result .both{font-weight:700;margin:6px 0 0}
+.result .bd{margin:6px 0}
+.aa{position:fixed;top:calc(env(safe-area-inset-top,0px) + 10px);right:12px;z-index:20}
+.aa>button{font:700 19px/1 Figtree,"Segoe UI",Arial,sans-serif;width:54px;height:44px;border-radius:12px;border:2px solid var(--card);background:var(--blue);color:#fff;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+.aapanel{display:none;position:absolute;right:0;top:54px;width:min(330px,calc(100vw - 24px));background:var(--card);color:var(--ink);border:2px solid var(--blue);border-radius:14px;padding:14px;box-shadow:0 6px 24px rgba(0,0,0,.3);font-size:16px;line-height:1.4;letter-spacing:0;word-spacing:0}
+.aapanel.on{display:block}
+.grp{margin:0 0 12px}.grp b{display:block;margin-bottom:6px}
+.row{display:flex;flex-wrap:wrap;gap:6px}
+.set{font:inherit;padding:7px 11px;border-radius:8px;border:1.5px solid var(--blue);background:transparent;color:var(--blue);cursor:pointer}
+.set[aria-pressed="true"]{background:var(--blue);color:#fff}
+:root[data-bg="cream"],:root[data-bg="blue"],:root[data-bg="hc"]{--ink:#1b2a41;--mute:#4a596e;--blue:#2b5aa8;--red:#b3342a;--ok:#1f7a4d;--okbg:#e3f4ea;--badbg:#fbe5e3;--hi:#fdecea;--line:#d6dde8}
+html:root[data-bg="cream"]{--bg:#fbf1d3;--card:#fffaea;--line:#e2d4a8}
+html:root[data-bg="blue"]{--bg:#e3eefb;--card:#f4f9ff}
+html:root[data-bg="hc"]{--bg:#000;--card:#000;--ink:#fff;--mute:#eee;--blue:#7fd0ff;--red:#ffb4a8;--line:#fff;--ok:#8dffb8;--okbg:#00331a;--badbg:#4a0000;--hi:#2a0f0c}
+html[data-bg="hc"] .tab[aria-selected="true"],html[data-bg="hc"] .set[aria-pressed="true"],html[data-bg="hc"] .aa>button,html[data-bg="hc"] .say:hover,html[data-bg="hc"] .result{color:#000}
+</style>
+</head>
+<body>
+<div class="flag"></div>
+<div class="aa"><button id="aaBtn" aria-expanded="false" aria-controls="aaPanel" aria-label="Reading settings">Aa</button>
+<div class="aapanel" id="aaPanel" role="group" aria-label="Reading settings">
+<div class="grp"><b>Text size</b><div class="row"><button class="set" data-k="sc" data-v="1">Normal</button><button class="set" data-k="sc" data-v="1.15">Large</button><button class="set" data-k="sc" data-v="1.3">Larger</button><button class="set" data-k="sc" data-v="1.5">Largest</button></div></div>
+<div class="grp"><b>Font</b><div class="row"><button class="set" data-k="font" data-v="std">Standard</button><button class="set" data-k="font" data-v="easy">Easy to read</button></div></div>
+<div class="grp"><b>Spacing</b><div class="row"><button class="set" data-k="sp" data-v="n">Normal</button><button class="set" data-k="sp" data-v="w">Wide</button></div></div>
+<div class="grp"><b>Background</b><div class="row"><button class="set" data-k="bg" data-v="def">Default</button><button class="set" data-k="bg" data-v="cream">Cream</button><button class="set" data-k="bg" data-v="blue">Light blue</button><button class="set" data-k="bg" data-v="hc">High contrast</button></div></div>
+<button class="set" data-aareset="1">Reset all</button>
+</div></div>
+<header>
+<h1>Bon appétit! French words on the English menu</h1>
+<p class="lead">Many English food words come from French. Read the short texts, tap the red words, listen to how they sound and answer the questions.</p>
+<div class="fact"><h2>Why so many?</h2><p style="margin:0">In 1066 the Normans from France took over England. For hundreds of years French was the language of the court and of rich kitchens. Many of those words stayed in English, and we still use them in restaurants today.</p></div>
+<ul class="tips" aria-label="Pronunciation tips for Norwegian speakers">
+<li><b>French u is Norwegian y.</b> Say menu like “meny” and purée like “pyre”.</li>
+<li><b>ch sounds like sj.</b> Chef sounds like the Norwegian “sjef”.</li>
+<li><b>Final letters are often silent.</b> In croissant and restaurant the last t is quiet.</li>
+<li><b>Nasal vowels.</b> In an and on, send the sound through your nose and skip the n.</li>
+</ul>
+</header>
+<main>
+<div class="tabs" role="tablist">
+<button class="tab" role="tab" id="tabA2" aria-selected="true" data-l="A2">Level A2<small>Short and simple</small></button>
+<button class="tab" role="tab" id="tabB2" aria-selected="false" data-l="B2">Level B2<small>Longer and more detail</small></button>
+</div>
+<div id="app"></div>
+</main>
+<footer>Nannestad High School - Barbara Anna Zielonka</footer>
+
+<script>
+const W={
+cafe:{s:"café",f:"café",m:"a small place that serves coffee, drinks and light meals",no:"kafé",en:"KAF-ay",fr:"ka-FAY"},
+menu:{s:"menu",f:"menu",m:"the list of food and drinks you can order",no:"meny",en:"MEN-yoo",fr:"muh-NY (French u = Norwegian y)"},
+croissant:{s:"croissant",f:"croissant",m:"a soft, curved pastry made with butter",no:"croissant",en:"kwah-SONT or krwah-SAHN",fr:"krwah-SAHN (nasal an)"},
+omelette:{s:"omelette",f:"omelette",m:"eggs mixed and cooked in a pan, often with a filling",no:"omelett",en:"OM-let",fr:"om-LET"},
+chef:{s:"chef",f:"chef",m:"the person in charge of a kitchen; the word comes from French for “chief”",no:"kokk, kjøkkensjef",en:"SHEF",fr:"SHEF (like Norwegian sjef)"},
+restaurant:{s:"restaurant",f:"restaurant",m:"a place where people buy and eat meals",no:"restaurant",en:"RES-tuh-ront",fr:"res-toh-RAHN (silent t)"},
+soup:{s:"soup",f:"soupe",m:"a liquid food made by boiling vegetables, meat or fish",no:"suppe",en:"SOOP",fr:"soop"},
+sauce:{s:"sauce",f:"sauce",m:"a thick liquid served with food to add flavour",no:"saus",en:"SAWSS",fr:"sohs"},
+dessert:{s:"dessert",f:"dessert",m:"a sweet dish at the end of a meal",no:"dessert",en:"dih-ZURT",fr:"day-SAIR"},
+beef:{s:"beef",f:"bœuf",m:"meat from a cow",no:"storfekjøtt",en:"BEEF",fr:"buhf"},
+pork:{s:"pork",f:"porc",m:"meat from a pig",no:"svinekjøtt",en:"PORK",fr:"por"},
+mutton:{s:"mutton",f:"mouton",m:"meat from an adult sheep",no:"fårekjøtt",en:"MUT-n",fr:"moo-TOHN (nasal on)"},
+veal:{s:"veal",f:"veau",m:"meat from a young cow, a calf",no:"kalvekjøtt",en:"VEEL",fr:"voh"},
+cuisine:{s:"cuisine",f:"cuisine",m:"a style of cooking, for example French or Italian cuisine",no:"kjøkken, matkultur",en:"kwih-ZEEN",fr:"kwee-ZEEN"},
+souschef:{s:"sous-chef",f:"sous-chef",m:"the second in command in a kitchen, below the head chef",no:"nestleder på kjøkkenet",en:"SOO shef",fr:"soo SHEF"},
+miseenplace:{s:"mise en place",f:"mise en place",m:"having all ingredients and tools ready before cooking starts",no:"alt klart før servering",en:"MEEZ on PLAHSS",fr:"meez ahn PLAS"},
+saute:{s:"sauté",f:"sauté",m:"to fry food quickly in a little hot fat",no:"å surre, å steke raskt",en:"soh-TAY",fr:"soh-TAY"},
+julienne:{s:"julienne",f:"julienne",m:"vegetables cut into very thin, long strips",no:"tynne strimler",en:"joo-lee-EN",fr:"zhy-lee-EN (zh as in “measure”)"},
+puree:{s:"purée",f:"purée",m:"food crushed into a smooth, thick mass",no:"puré, mos",en:"PYOOR-ay",fr:"py-RAY"},
+garnish:{s:"garnish",f:"garnir",m:"a small decoration on a plate, such as fresh herbs",no:"pynt, garnityr",en:"GAR-nish",fr:"gar-NEER (the French verb garnir)"}
+};
+const L={
+A2:{intro:"Four short steps: read, tap the red words, listen, answer.",texts:[
+{t:"Breakfast at Café Lune",p:"Every morning, Emma opens the {{cafe}} at seven o’clock. She puts the {{menu}} on each table. The first guest is Mr Berg. He orders a {{croissant}} and an {{omelette}}. The {{chef}}, Luc, cooks the eggs. Mr Berg says, “This is the best breakfast in town!”",
+qs:[{q:"What time does Emma open the café?",o:["Six o’clock","Seven o’clock","Eight o’clock"],a:1,e:"The text says she opens at seven o’clock."},
+{q:"What does Mr Berg order?",o:["Soup and a steak","Coffee and cake","A croissant and an omelette"],a:2,e:"He orders a croissant and an omelette."},
+{q:"Who cooks the eggs?",o:["Emma","Luc, the chef","Mr Berg"],a:1,e:"Luc is the chef and he cooks the eggs."},
+{q:"Which French word means the list of food at a restaurant?",o:["menu","chef","croissant"],a:0,e:"A menu is the list of dishes and drinks."}]},
+{t:"Dinner at Restaurant Bleu",p:"On Friday evening the {{restaurant}} is full. Anna and her brother want a table for two. Anna orders tomato {{soup}} and fish with a white {{sauce}}. Her brother takes a steak. For {{dessert}} they share a chocolate cake. The food is good and the waiter is kind.",
+qs:[{q:"When is the restaurant full?",o:["Friday evening","Monday morning","Saturday lunch"],a:0,e:"The text starts with Friday evening."},
+{q:"What does Anna have with her fish?",o:["Tomato soup","A white sauce","A chocolate cake"],a:1,e:"Her fish comes with a white sauce."},
+{q:"What do Anna and her brother have for dessert?",o:["Fruit","Ice cream","A chocolate cake"],a:2,e:"They share a chocolate cake."}]}]},
+B2:{intro:"Longer texts with more detail. Think about what the writer suggests as well as what the writer says.",texts:[
+{t:"Why do we eat pork but keep pigs?",p:"In 1066 the Normans from France conquered England. Their lords spoke French, while the English farmers who looked after the animals kept using English words. The animals in the field kept their English names: cow, pig and sheep. When the meat reached the lord’s table, it received a French name. So we say {{beef}} from boeuf, {{pork}} from porc, {{mutton}} from mouton and {{veal}} from veau. Many linguists see this as a mirror of the social classes of the time, although some details of the story are still debated. Today a chef may describe a menu as French {{cuisine}} or Italian cuisine, and that word also comes straight from French.",
+qs:[{q:"Why do many English meat words come from French?",o:["English farmers learned French at school","Norman lords spoke French and ate the meat","Frenchmen brought animals to England"],a:1,e:"The lords spoke French and the meat reached their tables, so the meat names became French."},
+{q:"Which pair matches the pattern in the text?",o:["pig and pork","cow and veal","sheep and beef"],a:0,e:"Pig is the English animal name and pork is the French meat name. Veal comes from calf, and beef from cow."},
+{q:"What does the text suggest about the English farmers?",o:["They kept English words for the animals they cared for","They refused to cook meat","They spoke only French"],a:0,e:"They looked after the animals and kept the English names."},
+{q:"What does “still debated” tell us?",o:["The story is fully proven","Experts disagree about some details","The story is false"],a:1,e:"Debated means people discuss it and do not agree on every detail."}]},
+{t:"Inside the kitchen brigade",p:"In a professional kitchen, the head chef leads a team called the brigade, a system that Auguste Escoffier helped make famous around 1900. The {{souschef}} runs the kitchen when the head chef is away. Before service, every cook prepares {{miseenplace}}, which means having all ingredients ready. During the rush, one cook might {{saute}} mushrooms while another cuts carrots into thin {{julienne}} strips. Later, potatoes become a smooth {{puree}}, and the plate gets a final {{garnish}} of fresh herbs.",
+qs:[{q:"What does mise en place mean in practice?",o:["Cleaning the kitchen after service","Having ingredients ready before cooking","Serving the guests quickly"],a:1,e:"The text explains it as having all ingredients ready."},
+{q:"Who is in charge when the head chef is away?",o:["The sous-chef","The guest","The waiter"],a:0,e:"The sous-chef runs the kitchen in the head chef’s absence."},
+{q:"Which word describes a cutting style?",o:["purée","julienne","sauté"],a:1,e:"Julienne means thin, long strips. Sauté is a cooking method and purée is a texture."},
+{q:"Which word names a decoration on the plate?",o:["garnish","brigade","sauce"],a:0,e:"A garnish is a small decoration such as fresh herbs."}]}]}};
+
+const M={
+A2:{qt:"Word detective",sort:[["Places and people",["cafe","restaurant","chef"]],["Dishes",["croissant","omelette","soup"]],["Menu items and extras",["menu","sauce","dessert"]]],
+bank:["cafe","chef","dessert","menu","sauce","soup"],
+gaps:[["I drink coffee at the {} every morning.","cafe"],["The {} cooks the food in the kitchen.","chef"],["Please bring me the {} so I can choose my food.","menu"],["I want chocolate cake for {}.","dessert"],["The fish comes with a white {}.","sauce"]],
+qs:[{q:"Which of these words does not come from French?",o:["dessert","bread","menu"],a:1,e:"Bread is an old English word. Dessert and menu came from French."},
+{q:"Which of these words does not come from French?",o:["sauce","milk","soup"],a:1,e:"Milk is an old English word. Sauce and soup came from French."},
+{q:"What is the French original of the English word soup?",o:["soupe","sope","supp"],a:0,e:"The French word is soupe."}]},
+B2:{qt:"Check your word history",sort:[["Meat names",["beef","pork","mutton","veal"]],["Cooking and preparation",["saute","julienne","miseenplace"]],["On the plate",["puree","garnish"]],["Kitchen people and styles",["souschef","cuisine"]]],
+bank:["garnish","julienne","miseenplace","pork","puree","saute","souschef","veal"],
+gaps:[["Before service, the cooks prepare their {} so that everything is ready.","miseenplace"],["The {} leads the kitchen when the head chef is away.","souschef"],["A cook cuts the carrots into thin {} strips.","julienne"],["We call meat from a young cow {}.","veal"],["The soup comes with a {} of fresh herbs.","garnish"],["Fry the onions quickly in a little butter. {} them for two minutes.","saute"]],
+qs:[{q:"Which French word gave English the word pork?",o:["porc","mouton","veau"],a:0,e:"Porc became pork. Mouton became mutton and veau became veal."},
+{q:"Which of these words is usually traced to Old Norse?",o:["menu","egg","sauce"],a:1,e:"Egg is generally traced to Old Norse, which is why it looks like the Norwegian word egg. Menu and sauce came from French."},
+{q:"Which English word comes from the French verb garnir?",o:["beef","cuisine","garnish"],a:2,e:"Garnir means to provide or decorate, and it gave us garnish."}]}};
+function shuf(a){return a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(v=>v[1])}
+function qh(lv,q){return `<div class="q" data-cat="w" data-lv="${lv}" data-a="${q.a}" data-e="${q.e.replace(/"/g,"&quot;")}"><p>${q.q}</p><div class="opts">${q.o.map((o,i)=>`<button class="opt" data-i="${i}">${o}</button>`).join("")}</div><p class="fb"></p></div>`}
+function more(lv){const m=M[lv];let h=`<h2 class="sec">More tasks</h2>`;
+const words=m.sort.flatMap((c,i)=>c[1].map(k=>[k,i]));st[lv].x=words.length+m.gaps.length+m.qs.length;st[lv].t={s:words.length,g:m.gaps.length,w:m.qs.length};
+h+=`<article class="text"><h2>Sort the words</h2><p>Tap a word, then tap the group where it belongs.</p><div class="chips">${shuf(words).map(w=>`<button class="chip" data-lv="${lv}" data-c="${w[1]}">${W[w[0]].s}</button>`).join("")}</div><div class="buckets">${m.sort.map((c,i)=>`<div class="bw"><button class="bucket" data-lv="${lv}" data-b="${i}">${c[0]}</button><div class="in"></div></div>`).join("")}</div><p class="fb" id="sf${lv}" aria-live="polite"></p></article>`;
+const op=`<option value="">Choose</option>`+m.bank.map(k=>`<option value="${k}">${W[k].s}</option>`).join("");
+h+=`<article class="text"><h2>Complete the sentences</h2>${m.gaps.map(g=>`<p class="gl">${g[0].replace("{}",`<select class="gap" data-lv="${lv}" data-a="${g[1]}" aria-label="Choose the missing word">${op}</select><span class="mk" aria-live="polite"></span>`)}</p>`).join("")}</article>`;
+h+=`<article class="text"><h2>${m.qt}</h2>${m.qs.map(q=>qh(lv,q)).join("")}</article>`;return h}
+function bump(lv,cat,ok){const s=st[lv];s.n++;if(ok)s.s++;const c=s.c=s.c||{};c[cat]=c[cat]||[0,0];c[cat][1]++;if(ok)c[cat][0]++}
+function award(lv,first,cat){bump(lv,cat,first);upd(lv)}
+const st={A2:{n:0,s:0},B2:{n:0,s:0}};
+const app=document.getElementById("app");
+function wordRow(k){const w=W[k];return `<tr><td class="en">${w.s}</td><td>${w.f}</td><td>${w.en}</td><td>${w.fr}</td><td><button class="say" data-t="${w.s}" data-l="en-GB" aria-label="Listen to ${w.s} in English">English</button><button class="say" data-t="${w.f}" data-l="fr-FR" aria-label="Listen to ${w.f} in French">French</button></td></tr>`}
+function build(lv){
+const D=L[lv];let total=0,keys=[];
+let h=`<section class="level" id="lv${lv}"><p class="lead" style="margin:0 0 6px">${D.intro}</p><div class="score" id="sc${lv}">Score: 0 / 0</div>`;
+D.texts.forEach((t,ti)=>{
+const body=t.p.replace(/\{\{(\w+)\}\}/g,(m,k)=>{if(!keys.includes(k))keys.push(k);return `<button class="w" data-k="${k}" data-p="pn${lv}${ti}">${W[k].s}</button>`});
+h+=`<article class="text"><h2>${t.t}</h2><p class="body">${body}</p><div class="panel" id="pn${lv}${ti}" aria-live="polite"><p class="hint">Tap a red word to see its meaning and hear how to say it.</p></div>`;
+t.qs.forEach((q,qi)=>{total++;h+=`<div class="q" data-lv="${lv}" data-a="${q.a}" data-e="${q.e.replace(/"/g,"&quot;")}"><p>${q.q}</p><div class="opts">${q.o.map((o,i)=>`<button class="opt" data-i="${i}">${o}</button>`).join("")}</div><p class="fb"></p></div>`});
+h+=`</article>`});
+h+=more(lv);st[lv].total=total+st[lv].x;st[lv].t.r=total;
+h+=`<div class="result" id="rs${lv}" role="status" tabindex="-1"><h2></h2><p></p><div class="bd"></div><p class="both"></p><button data-reset="${lv}">Try this level again</button></div>`;
+h+=`<h2 class="sec">Word bank and pronunciation</h2><div class="bank"><table><thead><tr><th>In English</th><th>French original</th><th>Say it in English</th><th>Say it in French</th><th>Listen</th></tr></thead><tbody>${keys.map(wordRow).join("")}</tbody></table></div></section>`;
+return h}
+function render(){app.innerHTML=build("A2")+build("B2");show("A2");upd("A2");upd("B2")}
+function show(lv){document.querySelectorAll(".level").forEach(e=>e.classList.toggle("on",e.id==="lv"+lv));document.querySelectorAll(".tab").forEach(b=>b.setAttribute("aria-selected",b.dataset.l===lv))}
+function upd(lv){const s=st[lv];document.getElementById("sc"+lv).textContent=`${s.n===s.total?"Final score":"Score"}: ${s.s} / ${s.total}  (${s.n} of ${s.total} finished)`;
+const r=document.getElementById("rs"+lv);
+if(s.n===s.total){const p=s.s/s.total;r.querySelector("h2").textContent=`Final score: ${s.s} out of ${s.total} (${Math.round(100*s.s/s.total)}%)`;
+r.querySelector("p").textContent=p===1?"Magnifique! Every answer is correct.":p>=.6?"Très bien! Read the explanations again for the questions you missed.":"Good effort. Tap the red words, listen again and try the level once more.";const was=r.classList.contains("on");r.classList.add("on");fill(lv);fill(lv==="A2"?"B2":"A2");if(!was){const rm=matchMedia("(prefers-reduced-motion: reduce)").matches;setTimeout(()=>{r.scrollIntoView({behavior:rm?"auto":"smooth",block:"center"});r.focus({preventScroll:true})},350)}}else r.classList.remove("on")}
+function fill(lv){const s=st[lv],r=document.getElementById("rs"+lv);if(!r||s.n!==s.total)return;
+const N={r:"Reading questions",s:"Sorting the words",g:"Complete the sentences",w:lv==="A2"?"Word detective":"Check your word history"};
+r.querySelector(".bd").innerHTML="<ul>"+Object.keys(N).map(k=>{const c=(s.c&&s.c[k])||[0,0];return `<li>${N[k]}: ${c[0]} out of ${s.t[k]}</li>`}).join("")+"</ul>";
+const o=st[lv==="A2"?"B2":"A2"];r.querySelector(".both").textContent=o.n===o.total?`Both levels finished. Total score: ${s.s+o.s} out of ${s.total+o.total}.`:""}
+function say(t,l){if(!("speechSynthesis" in window)){alert("Audio is not available in this browser.");return}speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang=l;u.rate=.8;speechSynthesis.speak(u)}
+document.addEventListener("click",e=>{
+const t=e.target.closest("button");if(!t)return;
+if(t.classList.contains("tab")){show(t.dataset.l);window.scrollTo({top:document.querySelector(".tabs").offsetTop-10});return}
+if(t.classList.contains("w")){const w=W[t.dataset.k],p=document.getElementById(t.dataset.p);
+p.innerHTML=`<h3>${w.s}</h3><dl><dt>Meaning</dt><dd>${w.m}</dd><dt>Norwegian</dt><dd>${w.no}</dd><dt>French original</dt><dd>${w.f}</dd><dt>Say it in English</dt><dd>${w.en}</dd><dt>Say it in French</dt><dd>${w.fr}</dd></dl><button class="say" data-t="${w.s}" data-l="en-GB">Listen in English</button><button class="say" data-t="${w.f}" data-l="fr-FR">Listen in French</button>`;return}
+if(t.classList.contains("say")){say(t.dataset.t,t.dataset.l);return}
+if(t.dataset.reset){const lv=t.dataset.reset;st[lv].n=0;st[lv].s=0;st[lv].c={};document.getElementById("lv"+lv).outerHTML=build(lv);show(lv);upd(lv);window.scrollTo({top:0});return}
+if(t.classList.contains("chip")){if(t.classList.contains("done"))return;const lv=t.dataset.lv;document.querySelectorAll("#lv"+lv+" .chip.sel").forEach(c=>c.classList.remove("sel"));t.classList.add("sel");document.getElementById("sf"+lv).textContent="Now tap the group.";return}
+if(t.classList.contains("bucket")){const lv=t.dataset.lv,c=document.querySelector("#lv"+lv+" .chip.sel"),f=document.getElementById("sf"+lv),bw=t.closest(".bw");if(!c){f.textContent="Tap a word first.";return}
+if(c.dataset.c===t.dataset.b){c.classList.remove("sel");c.classList.add("done");bw.querySelector(".in").appendChild(c);f.textContent="Correct.";award(lv,!c.dataset.tried,"s")}else{c.dataset.tried=1;bw.classList.add("bad");setTimeout(()=>bw.classList.remove("bad"),700);f.textContent="Try another group."}return}
+if(t.classList.contains("opt")){const q=t.closest(".q"),lv=q.dataset.lv,a=+q.dataset.a,i=+t.dataset.i;
+q.querySelectorAll(".opt").forEach((b,j)=>{b.disabled=true;if(j===a)b.classList.add("right");else if(j===i)b.classList.add("wrong")});
+const ok=i===a;bump(lv,q.dataset.cat||"r",ok);
+q.querySelector(".fb").textContent=(ok?"Correct. ":"Not this time. ")+q.dataset.e;upd(lv)}
+});
+document.addEventListener("change",e=>{const x=e.target;if(!x.classList.contains("gap")||!x.value)return;const lv=x.dataset.lv,m=x.nextElementSibling;x.classList.remove("wrong");if(x.value===x.dataset.a){x.classList.add("right");x.disabled=true;m.textContent=" Correct";award(lv,!x.dataset.tried,"g")}else{x.dataset.tried=1;x.classList.add("wrong");m.textContent=" Try again"}});
+render();
+(function(){const root=document.documentElement,b=document.body,btn=document.getElementById("aaBtn"),pn=document.getElementById("aaPanel");
+const D={sc:"1",font:"std",sp:"n",bg:"def"};let s=Object.assign({},D);
+try{Object.assign(s,JSON.parse(localStorage.getItem("fwAa")||"{}"))}catch(e){}
+function apply(){const w=s.sp==="w";root.style.setProperty("--sc",s.sc);root.dataset.bg=s.bg;b.classList.toggle("easy",s.font==="easy");
+b.style.setProperty("--lh",w?"1.9":"1.55");b.style.setProperty("--ls",w?".04em":"0");b.style.setProperty("--ws",w?".14em":"0");
+pn.querySelectorAll("[data-k]").forEach(x=>x.setAttribute("aria-pressed",String(s[x.dataset.k]===x.dataset.v)));
+try{localStorage.setItem("fwAa",JSON.stringify(s))}catch(e){}}
+btn.addEventListener("click",()=>{const o=pn.classList.toggle("on");btn.setAttribute("aria-expanded",o)});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&pn.classList.contains("on")){pn.classList.remove("on");btn.setAttribute("aria-expanded",false);btn.focus()}});
+pn.addEventListener("click",e=>{const x=e.target.closest(".set");if(!x)return;if(x.dataset.aareset)s=Object.assign({},D);else s[x.dataset.k]=x.dataset.v;apply()});
+apply()})();
+</script>
+</body>
+</html>
